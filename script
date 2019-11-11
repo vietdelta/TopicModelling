@@ -1,0 +1,33 @@
+item = response.css("div.item")
+links = item.css("a::attr(href)").getall()
+
+
+
+
+filename = 'linkfb.json'
+with open(filename, 'w') as f:
+    for link in links:
+        fetch(link)
+        odd = response.css("div.account-detail")
+        linkfb = odd.css("a::attr(href)").get()
+        f.write(linkfb)
+        f.write("\n")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+fetch(links[0])
+odd = response.css("li.odd")
+linkfb = odd.css("a::attr(href)").get()
+

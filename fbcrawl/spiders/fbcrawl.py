@@ -163,12 +163,15 @@ class FacebookSpider(scrapy.Spider):
                 
             #if 'date' argument is reached stop crawling
             if self.date > current_date:
+                print("Dung cmnr\n")
                 raise CloseSpider('Reached date: {}'.format(self.date))
 
             new = ItemLoader(item=FbcrawlItem(),selector=post)
             if abs(self.count) + 1 > self.max:
                 raise CloseSpider('Reached max num of post: {}. Crawling finished'.format(abs(self.count)))
             self.logger.info('Parsing post n = {}, post_date = {}'.format(abs(self.count)+1,date))
+            print(self.date)
+            print(current_date)
             new.add_xpath('comments', './div[2]/div[2]/a[1]/text()')     
             new.add_value('date',date)
             new.add_xpath('post_id','./@data-ft')
