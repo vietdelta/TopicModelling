@@ -44,7 +44,7 @@ for j in range(page_id[-1],len(rating)):
     sum = sum + rating[j]
 for j in range(page_id[-1],len(rating)):
     rating[j] = rating[j]/sum
-print(rating)
+# print(rating)
 # print(corpus)
 vectorizer = CountVectorizer()
 X = vectorizer.fit_transform(corpus)
@@ -70,20 +70,20 @@ for j in range(page_id[-1],len(rating)):
 page_vector.append(vector_temp)
 
 # print(page_vector)
-sns.distplot(page_vector[5])
+# sns.distplot(page_vector[5])
 
 
-# print(type(topic_word))
-# n_top_words = 10
-# for i, topic_dist in enumerate(topic_word):
-#     topic_words = np.array(vocab)[np.argsort(topic_dist)][:-(n_top_words+1):-1]
-#     print('Topic {}: {}'.format(i, ' '.join(topic_words)))
+print(type(topic_word))
+n_top_words = 10
+for i, topic_dist in enumerate(topic_word):
+    topic_words = np.array(vocab)[np.argsort(topic_dist)][:-(n_top_words+1):-1]
+    print('Topic {}: {}'.format(i, ' '.join(topic_words)))
 
 
-# # for i in range(10):
-# # 	print('Doc "{}"- Topic {}'.format(corpus[i], doc_topic[i].argmax()))
-# # 	#print(doc_topic[i].argmax())
-# for i, line in enumerate(corpus):
-#     if(doc_topic[i].argmax()==7 and len(corpus[i])>=200):
-#         print('Doc "{}"'.format(corpus[i]))
+# for i in range(10):
+# 	print('Doc "{}"- Topic {}'.format(corpus[i], doc_topic[i].argmax()))
+# 	#print(doc_topic[i].argmax())
+for i, line in enumerate(corpus):
+    if(doc_topic[i].argmax()==7 and len(corpus[i])>=200):
+        print('Doc "{}"'.format(corpus[i]))
     
