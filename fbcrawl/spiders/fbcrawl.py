@@ -15,7 +15,7 @@ class FacebookSpider(scrapy.Spider):
     custom_settings = {
         'FEED_EXPORT_FIELDS': ['source','shared_from','date','text', \
                                'reactions','likes','ahah','love','wow', \
-                               'sigh','grrr','comments','post_id','url'],
+                               'sigh','grrr','comments','post_id','url','share'],
         'DUPEFILTER_CLASS' : 'scrapy.dupefilters.BaseDupeFilter',
     }
     
@@ -41,8 +41,8 @@ class FacebookSpider(scrapy.Spider):
                 self.group = 0
             if self.page.find('https://www.facebook.com/') != -1:
                 self.page = self.page[25:]
-            elif self.page.find('https://mbasic.facebook.com/') != -1:
-                self.page = self.page[28:]
+            # elif self.page.find('https://m.facebook.com/') != -1:
+            #     self.page = self.page[28:]
             elif self.page.find('https://m.facebook.com/') != -1:
                 self.page = self.page[23:]
 
@@ -81,7 +81,7 @@ class FacebookSpider(scrapy.Spider):
         #count number of posts, used to enforce DFS and insert posts orderly in the csv
         self.count = 0
         
-        self.start_urls = ['https://mbasic.facebook.com']    
+        self.start_urls = ['https://m.facebook.com/']    
 
     def parse(self, response):
         '''
@@ -147,6 +147,8 @@ class FacebookSpider(scrapy.Spider):
 #        open_in_browser(response)
     
         #select all posts
+        print("Here is the fucking response")
+        print(response)
         for post in response.xpath("//div[contains(@data-ft,'top_level_post_id')]"):     
  
             many_features = post.xpath('./@data-ft').get()
@@ -164,6 +166,8 @@ class FacebookSpider(scrapy.Spider):
             #if 'date' argument is reached stop crawling
             if self.date > current_date:
                 print("Dung cmnr\n")
+                print(self.date)
+                print(current_date)
                 raise CloseSpider('Reached date: {}'.format(self.date))
 
             new = ItemLoader(item=FbcrawlItem(),selector=post)
@@ -172,7 +176,9 @@ class FacebookSpider(scrapy.Spider):
             self.logger.info('Parsing post n = {}, post_date = {}'.format(abs(self.count)+1,date))
             print(self.date)
             print(current_date)
-            new.add_xpath('comments', './div[2]/div[2]/a[1]/text()')     
+            new.add_xpath('comments', './div[2]/div[2]/a[1]/text()')
+            # new.add_xpath('comments', './div[2]/span[1]/text()')
+            new.add_xpath('share', './div[2]/div[2]/a[5]/text()')       
             new.add_value('date',date)
             new.add_xpath('post_id','./@data-ft')
             new.add_xpath('url', ".//a[contains(@href,'footer')]/@href")
@@ -243,7 +249,8 @@ class FacebookSpider(scrapy.Spider):
         if not check_reactions:
             yield new.load_item()       
         else:
-            new.add_xpath('reactions',"//a[contains(@href,'reaction/profile')]/div/div/text()")              
+            new.add_xpath('reactions',"//a[contains(@href,'reaction/profile')]/div/div/text()")
+            # new.add_xpath('share',"//a[contains(@href,'reaction_type=8')]/span/text()")                  
             reactions = response.xpath("//div[contains(@id,'sentence')]/a[contains(@href,'reaction/profile')]/@href")
             reactions = response.urljoin(reactions[0].extract())
             yield scrapy.Request(reactions, callback=self.parse_reactions, meta={'item':new})
@@ -256,5 +263,7 @@ class FacebookSpider(scrapy.Spider):
         new.add_xpath('love',"//a[contains(@href,'reaction_type=2')]/span/text()")
         new.add_xpath('wow',"//a[contains(@href,'reaction_type=3')]/span/text()")
         new.add_xpath('sigh',"//a[contains(@href,'reaction_type=7')]/span/text()")
-        new.add_xpath('grrr',"//a[contains(@href,'reaction_type=8')]/span/text()")     
+        new.add_xpath('grrr',"//a[contains(@href,'reaction_type=8')]/span/text()")
+        
         yield new.load_item()       
+        #ajax/shares

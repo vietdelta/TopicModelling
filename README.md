@@ -28,7 +28,7 @@ EDIT: fbcrawl can now crawl comments! check out the "how to crawl comments" sect
 
 What features can fbcrawl obtain? Everything that you see in the table is crawled by default. I decided to simplify the timestamp feature, leaving out the hour and to ignore comments and commentators, which are going to be parsed post-by-post by another crawler.
 
-Fbcrawl makes use of an static mobile version of facebook, unknown to many: [https://mbasic.facebook.com](https://mbasic.facebook.com) because it's all plain HTML and we can navigate easily through the pages without having to emulate a browser or inject javascript code.
+Fbcrawl makes use of an static mobile version of facebook, unknown to many: [https://m.facebook.com](https://m.facebook.com) because it's all plain HTML and we can navigate easily through the pages without having to emulate a browser or inject javascript code.
 
 ## Installation
 Requirements are: **python3** (python2 is also supported) and the  **scrapy** framework, that should pull other needed libs as dependencies (twisted, libxml2 etc.).
@@ -71,7 +71,7 @@ The project is thus divided in several files that serve different purposes:
         **comments.py** -- implements the spider for comments
 
 ## How to crawl a page (fbcrawl.py)
-The core of the crawler is this spider class, `fbcrawl`. On init, it navigates to `mbasic.facebook.com` and logs into facebook according to the provided `credentials`, passed as parameters at execution time (see "How to use"). Then the `parse_page` method is called with the `page` name given at runtime and the crawling process begins recursively retrieving all the posts found in every page. For each of the post it retrieves all the features, using the callback `parse_post`, and all the reactions, using `parse_reactions`.
+The core of the crawler is this spider class, `fbcrawl`. On init, it navigates to `m.facebook.com` and logs into facebook according to the provided `credentials`, passed as parameters at execution time (see "How to use"). Then the `parse_page` method is called with the `page` name given at runtime and the crawling process begins recursively retrieving all the posts found in every page. For each of the post it retrieves all the features, using the callback `parse_post`, and all the reactions, using `parse_reactions`.
 
 The webpage are parsed and the fields are extracted using **XPath** selectors. These selectors are implemented on the python lib `lxml` so they are very fast.
 
@@ -168,7 +168,7 @@ scrapy crawl comments -a email="EMAILTOLOGIN" -a password="PASSWORDTOLOGIN" -a p
 The use is similar to fb spider, the only difference being the -a page parameter, which now is the link to a post. Make sure that the `page` option is a proper post link, for example:
 
 ```
-rm trump_comments.csv; scrapy crawl comments -a email="obama@gmail.com" -a password="cm380jixke" -a page="https://mbasic.facebook.com/story.php?story_fbid=10162169751605725&id=153080620724" -o trump_comments.csv
+rm trump_comments.csv; scrapy crawl comments -a email="obama@gmail.com" -a password="cm380jixke" -a page="https://m.facebook.com/story.php?story_fbid=10162169751605725&id=153080620724" -o trump_comments.csv
 ```
 
 
@@ -210,7 +210,7 @@ Reactions are the total number of reactions that the comment gets, a finer subdi
 * ~~scrape total number of reactions from comments~~
 * ~~add features representing connections between commentators (-> reply-to)~~
 
-The number of shares is not retrieved, it is not available in `mbasic.facebook.com`. Also the number of comments field only counts direct comments and not reply comments, because that's how mbasic works. To fix both of these issues:
+The number of shares is not retrieved, it is not available in `m.facebook.com`. Also the number of comments field only counts direct comments and not reply comments, because that's how mbasic works. To fix both of these issues:
 * extract URL of post and use m.facebook.com to retrieve these data
 
 Some other interesting features can be derived. Comments and commentators can be related better to post and page:

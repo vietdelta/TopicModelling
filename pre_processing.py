@@ -20,7 +20,7 @@ def nomolize(txt):
                                "]+", flags=re.UNICODE)
     line = emoji_pattern.sub(r'', line)
     line = re.sub(r'[http|https:\/\/]*[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/=]*)', '', line) #remove url
-    
+    line = re.sub(r'\#', ' ', line) # remove ".""
     line = re.sub(r'\d', ' ', line) # remove number like 2488
     line = re.sub(r'\.', ' ', line) # remove ".""
     line = re.sub(r'\"', ' ', line) # remove ".""
@@ -34,6 +34,7 @@ def nomolize(txt):
     line = re.sub(r'\:', ' ', line) # remove ".""
     line = re.sub(r'\,', ' ', line) # remove ".""
     line = re.sub(r'\;', ' ', line) # remove ".""
+    
 
     line = re.sub(r'\–+|\/+', ' ', line) # remove chacracter like - or / 
     line = re.sub(r'\=+|\*+|\++|\-+', ' ', line) #remove = * + -*=
@@ -108,6 +109,7 @@ def pre_comments(comments):
         comments_done.append(comment)
     return comments_done
 
+data_folder = "/home/vietphan/Downloads/fbcrawl/Data-Community-Nov/"
 stop_words = []
 stop_words_file = "/home/vietphan/Downloads/fbcrawl/stopwords.txt"
 stop_words_no_accent = []
@@ -129,13 +131,13 @@ source_file = "/home/vietphan/Downloads/fbcrawl/source.txt"
 with open(filename, 'w') as f:
     with open(rating_file, 'w') as f2:
         with open(source_file, 'w') as f3:
-            while(count<=101):
+            while(count<=200):
                 print("Processing "+str(count))
-                if is_non_zero_file("/home/vietphan/Downloads/fbcrawl/Data/"+str(count)+".csv"):
-                    data = pd.read_csv("/home/vietphan/Downloads/fbcrawl/Data/"+str(count)+".csv",usecols=['text'])
-                    reactions = pd.read_csv("/home/vietphan/Downloads/fbcrawl/Data/"+str(count)+".csv",usecols=['reactions'])
-                    comments = pd.read_csv("/home/vietphan/Downloads/fbcrawl/Data/"+str(count)+".csv",usecols=['comments'])
-                    source = pd.read_csv("/home/vietphan/Downloads/fbcrawl/Data/"+str(count)+".csv",usecols=['source'])
+                if is_non_zero_file(data_folder+str(count)+".csv"):
+                    data = pd.read_csv(data_folder+str(count)+".csv",usecols=['text'])
+                    reactions = pd.read_csv(data_folder+str(count)+".csv",usecols=['reactions'])
+                    comments = pd.read_csv(data_folder+str(count)+".csv",usecols=['comments'])
+                    source = pd.read_csv(data_folder+str(count)+".csv",usecols=['source'])
                     data = list(data.values.flatten())
                     reactions = list(reactions.values.flatten())
                     comments = list(comments.values.flatten())
@@ -161,7 +163,7 @@ with open(filename, 'w') as f:
                         line = remove_stop_words(line,stop_words,stop_words_no_accent)
                         
                         # print(line+"\n")
-                        if (len(line)>=10):
+                        if (len(line)>=20):
                             f.write(line)
                             f.write("\n")
                             # print(comments_done[i],reactions_done[i])                        

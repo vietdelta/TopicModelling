@@ -4,7 +4,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 import lda
 import numpy as np
 import pickle
-filename = "/home/vietphan/Downloads/fbcrawl/corpus.txt"
+filename = "/home/vietphan/Downloads/fbcrawl/done_processing.txt"
 corpus = []
 page_id = []
 doc_count = 0
@@ -23,7 +23,7 @@ X = vectorizer.fit_transform(corpus)
 vocab = vectorizer.get_feature_names()
 # print(vectorizer.get_feature_names())
 
-model = lda.LDA(n_topics=20, n_iter=2500, random_state=1)
+model = lda.LDA(n_topics=20, n_iter=2000, random_state=1)
 model.fit(X)
 print("Saving model....")
 model_filename = 'finalized_model.sav'

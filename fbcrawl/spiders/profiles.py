@@ -140,7 +140,7 @@ class ProfileSpider(FacebookSpider):
 
         for reply in response.xpath(path):
             rep = reply.xpath('.//h3/a/@href').get()
-            profile =  'https://mbasic.facebook.com' + rep[:rep.find('?rc')] + '/about'
+            profile =  'https://m.facebook.com' + rep[:rep.find('?rc')] + '/about'
             yield scrapy.Request(profile,
                  callback=self.parse_profile,
                  priority=1000,
@@ -154,7 +154,7 @@ class ProfileSpider(FacebookSpider):
             for i,reply in enumerate(response.xpath(path2)):
                 self.logger.info('{} regular comment'.format(i+1))
                 rep = reply.xpath('.//h3/a/@href').get()
-                profile =  'https://mbasic.facebook.com' + rep[:rep.find('?rc')] + '/about'
+                profile =  'https://m.facebook.com' + rep[:rep.find('?rc')] + '/about'
                 yield scrapy.Request(profile,
                      callback=self.parse_profile,
                      priority=1000,
@@ -198,7 +198,7 @@ class ProfileSpider(FacebookSpider):
             #parse root comment
             for root in response.xpath('//div[contains(@id,"root")]/div/div/div[count(@id)!=1 and contains("0123456789", substring(@id,1,1))]'): 
                 rep = root.xpath('.//h3/a/@href').get()
-                profile =  'https://mbasic.facebook.com' + rep[:rep.find('?rc')] + '/about'
+                profile =  'https://m.facebook.com' + rep[:rep.find('?rc')] + '/about'
                 yield scrapy.Request(profile,
                      callback=self.parse_profile,
                      priority=1000,
@@ -209,7 +209,7 @@ class ProfileSpider(FacebookSpider):
             #parse all replies in the page
             for reply in response.xpath('//div[contains(@id,"root")]/div/div/div[count(@id)=1 and contains("0123456789", substring(@id,1,1))]'): 
                 rep = reply.xpath('.//h3/a/@href').get()
-                profile =  'https://mbasic.facebook.com' + rep[:rep.find('?rc')] + '/about'
+                profile =  'https://m.facebook.com' + rep[:rep.find('?rc')] + '/about'
                 yield scrapy.Request(profile,
                      callback=self.parse_profile,
                      priority=1000,
@@ -243,7 +243,7 @@ class ProfileSpider(FacebookSpider):
             #parse all comments
             for reply in response.xpath('//div[contains(@id,"root")]/div/div/div[count(@id)=1 and contains("0123456789", substring(@id,1,1))]'): 
                 rep = reply.xpath('.//h3/a/@href').extract()[0]
-                profile =  'https://mbasic.facebook.com' + rep[:rep.find('?rc')] + '/about'
+                profile =  'https://m.facebook.com' + rep[:rep.find('?rc')] + '/about'
                 yield scrapy.Request(profile,
                      callback=self.parse_profile,
                      priority=1000,
