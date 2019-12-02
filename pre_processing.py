@@ -109,7 +109,7 @@ def pre_comments(comments):
         comments_done.append(comment)
     return comments_done
 
-data_folder = "/home/vietphan/Downloads/fbcrawl/Data-Community-Nov/"
+data_folder = "/home/vietphan/Downloads/fbcrawl/Data-Celeb-Nov/"
 stop_words = []
 stop_words_file = "/home/vietphan/Downloads/fbcrawl/stopwords.txt"
 stop_words_no_accent = []
