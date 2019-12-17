@@ -131,7 +131,7 @@ source_file = "/home/vietphan/Downloads/fbcrawl/source.txt"
 with open(filename, 'w') as f:
     with open(rating_file, 'w') as f2:
         with open(source_file, 'w') as f3:
-            while(count<=200):
+            while(count<=2):
                 print("Processing "+str(count))
                 if is_non_zero_file(data_folder+str(count)+".csv"):
                     data = pd.read_csv(data_folder+str(count)+".csv",usecols=['text'])
@@ -152,8 +152,8 @@ with open(filename, 'w') as f:
             # print(data)
                     source = str(source)
                     print(source)
-                    f.write("*doc"+str(count)+":"+str(source)+"\n")
-                    f2.write("*doc"+str(count)+":"+str(source)+"\n")
+                    # f.write("*doc"+str(count)+":"+str(source)+"\n")
+                    # f2.write("*doc"+str(count)+":"+str(source)+"\n")
                     
                     for i, line in enumerate(data):
                         line = nomolize(line)
