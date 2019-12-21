@@ -5,7 +5,7 @@ import lda
 import numpy as np
 import pickle
 data_folder = "/home/vietphan/Downloads/fbcrawl/Data-Celeb-Nov/"
-filename = datafolder+"model/"+"done_processing.txt"
+filename = data_folder+"model/"+"done_processing.txt"
 corpus = []
 page_id = []
 doc_count = 0
@@ -27,7 +27,7 @@ vocab = vectorizer.get_feature_names()
 model = lda.LDA(n_topics=20, n_iter=2000, random_state=1)
 model.fit(X)
 print("Saving model....")
-model_filename = datafolder+"model/"+'finalized_model.sav'
+model_filename = data_folder+"model/"+'finalized_model.sav'
 pickle.dump(model, open(model_filename, 'wb'))
 print("Model saved")
 
