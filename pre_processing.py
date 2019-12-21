@@ -125,9 +125,9 @@ with open(stop_words_file, 'r') as f:
 
 # print(stop_words)
 count = 0
-filename = "/home/vietphan/Downloads/fbcrawl/corpus.txt"
-rating_file = "/home/vietphan/Downloads/fbcrawl/rating.txt"
-source_file = "/home/vietphan/Downloads/fbcrawl/source.txt"
+filename = data_folder+"model/"+"corpus.txt"
+rating_file = data_folder+"model/"+"rating.txt"
+source_file = data_folder+"model/"+"source.txt"
 with open(filename, 'w') as f:
     with open(rating_file, 'w') as f2:
         with open(source_file, 'w') as f3:
