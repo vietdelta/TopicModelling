@@ -48,3 +48,6 @@ ____________________________________________
 ### VISUALZIE 
 
 Run the "Visualize.ipynb" notebook to visualize the results
+
+![Image description](https://github.com/vietdelta/TopicModelling/blob/master/Data-Media-Oct/Fig/WordCloud-topic3.png)
+
