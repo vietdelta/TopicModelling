@@ -10,7 +10,7 @@ with open(filename, 'w') as f:
         fetch(link)
         odd = response.css("div.account-detail")
         linkfb = odd.css("a::attr(href)").get()
-        f.write(linkfb)
+        f.write(link)
         f.write("\n")
 
 
